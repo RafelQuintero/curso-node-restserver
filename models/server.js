@@ -8,7 +8,7 @@ class Server {
 	constructor() {
 		this.app = express();
 
-		this.port = process.env.PORT;
+		this.port = process.env.PORT || 3000;
 		this.routesPatch = '/api/usuarios'; //?Para que sepa cualquier otro  que estas son las rutas que utiliza un usorio
 
 		//crearemos  midelware, lo cual  debemos llamaremos
