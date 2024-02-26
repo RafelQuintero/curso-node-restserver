@@ -18,5 +18,5 @@ const server = new Server(); //Creando la instacia par tomar toda la informacion
 server.listen();
 
 //? PASO 1.- TARBAJAREMOS LA INICALIZACION DE MI SERVIDOR PARA QUE ESTE COFIGURADO EN UNA CLASS
-//? PASO  2- CREAREOMOS LA CARPETA PUBLICA  y esta el la que siempre se ejecutara como primera prioridad ya que es la que estara en la ruta raiz 8080. Ejecutandose por por medio de un middelwar.
-//? PASO 3.- Instalaremos eñ modlo cors com la finaldad que soño podamos acceer a cieras dircciones en especifico.
+//? PASO  2- CREAREOMOS LA CARPETA PUBLICA  y esta es la que siempre se ejecutara como primera prioridad ya que es la que estara en la ruta raiz 8080. Ejecutandose por por medio de un middelwar.
+//? PASO 3.- Instalaremos eñ modelo cors com la finaldad  de que  podamos acceer a ciertas dircciones  de la web en especifico.
