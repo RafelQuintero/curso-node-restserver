@@ -37,10 +37,11 @@ const UsuarioSchema = Schema({
 	},
 });
 
-//? crearemos metodos para sobreescribir el modelo de Schema  o modificarlo de la siquinte manera . Ojo debe ser una foncion creada con la palabra funtion par que el this tenga el contexto dentro de esta funcion
+//? crearemos metodos para sobreescribir el modelo de Schema  o modificarlo de la siquinte manera . Ojo debe ser una funcion creada con la palabra funtion par que el this tenga el contexto dentro de esta funcion
 UsuarioSchema.methods.toJSON = function () {
-	const { __v, password, ...usuario } = this.toObject();
-	return usuario; //?   todos los datos del modelo se mostrar y se exclira __v y el password
+	const { __v, password, _id, ...usuario } = this.toObject();
+	usuario.uid = _id; //? Primero extraje el _id para que no se muestre, 2do.  Transformo el:id por el uid y lo vuelvo a incorpoarar al usuario, creando la propiedad: usuario.uid = _id, que sra lo que se mostrarar pero sin modificar la  base de datos de mongodDB Atlas. haciedo un :
+	return usuario; //?   todos los datos del modelo se mostrara en usuario  y se excluira __v y el password
 };
 
 module.exports = model('Usuario', UsuarioSchema);

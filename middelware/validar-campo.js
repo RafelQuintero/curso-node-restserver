@@ -1,7 +1,6 @@
 const { validationResult } = require('express-validator');
 
 const validarCampo = (req, res, next) => {
-	console.log('valdando Campos');
 	const errors = validationResult(req);
 	//Verifiquemos el el nombre , password,correo y rol que son validos.
 	if (!errors.isEmpty()) {
