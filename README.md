@@ -1,3 +1,3 @@
 # WebServer+RestServer
 
-REcuerden que dben de ejecutar .````mpm install````` para recuonsruir los modulos de Node.
+Recuerden que deben de ejecutar .````npm install````` para reconstruir los modulos de Node.
