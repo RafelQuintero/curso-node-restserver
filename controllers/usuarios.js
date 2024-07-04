@@ -136,18 +136,29 @@ const usuariosPUT = async (req, res) => {
 const usuariosDelete = async (req, res) => {
 	const { id } = req.params;
 
-	//* Boramos fisicamente el usuario de la bas de datos (en la colccion de mngoDB Atlas ) pero lo dejaremos el cdgo de manera de cometario como dicactico,---------
+	//? extraigo el uid que esta en la req.uid
+	//?const uid = req.uid; para mostrarlo, que es el uid que conteiene el token valido
+
+	//* Boramos fisicamente el usuario de la bas de datos (en la colccion de mngoDB Atlas ) pero lo dejaremos el codigo de manera de cometario como dicactico,---------
 
 	//?const usuario = await Usuario.findByIdAndDelete(id);
 
-	//*fim de orrado fisicamente------
+	//*fim de borrado fisicamente------
 
 	//* Ahora lo borramo pero que no se ilimine de la DB de MongodDB atlas-----
 
 	const usuario = await Usuario.findByIdAndUpdate(id, { estado: false });
 
+	//?De ddonde obtengo el usuario autenticado , lo obtengo de la req.usuario
+
+	//?const usuarioautenticado = req.usuario; lo elimino para que no se muestre ya que lo utilzamos para saber queera el usuario tenricado que es el que tien el uid del token
+
 	res.json({
 		usuario,
+
+		//* uid, eliminamos para que no se muestre era ya que que demostramos queexiste este uid de usuario que tiene el toquen
+
+		//*usuarioautenticado,  lo elimino para que no se muestre ya que lo utilzamos para saber queera el usirio tenricado que es el que tien el uid del token
 	});
 };
 
