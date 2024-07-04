@@ -12,6 +12,7 @@ class Server {
 
 		this.port = process.env.PORT;
 		this.routesPatch = '/api/usuarios'; //?Para que sepa cualquier otro  que estas son las rutas que utiliza un usuario
+		this.authPath = '/api/auth'; //? Esta sera la ruta para la autenticacion del usuario
 
 		//*Hacemos la conexion con la base de datos justo cunado hagamos la lla maada
 
@@ -50,6 +51,8 @@ class Server {
 	//todo: Donde las respuesta es  es del tipo json la cual esta conformada por por objetos
 
 	routes() {
+		this.app.use(this.authPath, require('../routes/auth')); //* Se creo la ruta para la autenticacion
+
 		this.app.use(this.routesPatch, require('../routes/usuarios'));
 	}
 

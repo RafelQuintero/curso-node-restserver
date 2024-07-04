@@ -1,8 +1,8 @@
 //TODO ,En este archivo user.js . Crearemos las rutas relacionadas con los usorios.
 //TODO; Del paquete express obtengamos una funcion llamada Router por medio de la desestrcturacion.
-
 const { Router } = require('express');
-const { check } = require('express-validator'); //! optemomos el metodo check para utilizarla como verificador alg , en este caso el correo.
+const { check } = require('express-validator');
+//! optemomos el metodo check para utilizarla como verificador alg , en este caso el correo.
 
 //todo: Importaremos de la carpeta controllers la funcions usuariosGet para utilzarla como referncia en router.get.
 
@@ -13,8 +13,23 @@ const {
 	usuariosDelete,
 	usuariosPatch,
 } = require('../controllers/usuarios');
+
 const { ExpressValidator } = require('express-validator');
-const { validarCampo } = require('../middelware/validar-campo'); //* se hizo el requerimiento de validarCampo
+
+//? Optimzemos las linea 20 21 y 22  que vienen del mis directorio llamado middelware, unificaremos los res archivos de abajo en uno solo. utilzando algo propio de NODEJS. Creando un nuevo archivo llamado index.js en el diectorio middelware
+
+//?const { validarCampo } = require('../middelware/validar-campo'); //* se hizo el requerimiento de validarCampo
+//?const { validarJWT } = require('../middelware/validar-jwt.js');
+//?const { esAdminRole, tieneRole } = require('../middelware/validar-roles.js');
+//* Imprtemos
+const {
+	validarCampo,
+	validarJWT,
+	esAdminRole,
+	tieneRole,
+} = require('../middelware'); //*el index no se necesiat escribirlo en la ruta, ya que se busca por defecto
+
+//? Fin de la optimacion
 
 //* importemos el modelo  Role, lo quitamos y lo colcamos en el archivo db-validator.js de la carpeta helpers
 
@@ -24,6 +39,7 @@ const {
 	emailExiste,
 	existeUsuaroPorId,
 } = require('../helpers/db-validator.js');
+const role = require('../models/role.js');
 
 // Creamos un constante llamada ruoter, que conterndar todas las funciones de Router
 
@@ -90,6 +106,10 @@ router.patch('/', usuariosPatch);
 router.delete(
 	'/:id',
 	[
+		validarJWT,
+		esAdminRole, //?eSTE MIDDELWARE OBLIGA QUE EL USUARiO TIENE QUE SER ADMINISTRADOR
+
+		tieneRole('ADMIN_ROLE', 'VENTAS_ROLE'), //?ESTE MIDDELWARE  es mas flexible que contenga como argumentos 'ADMIN_ROLE','VENTAS_ROLE'
 		check(
 			'id',
 			' NO ES  UN id DE MONGODB-ATLAS VALIDO ENVIADO EN EL "param" ',
