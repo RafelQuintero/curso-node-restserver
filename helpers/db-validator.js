@@ -1,6 +1,9 @@
 //!TOmaremos la funcion que esta dentro del argumento  de custom que esta en la linea 47 del archivo ausarios.js y se la asignaremos a una variable "esRolvalido"
-const Role = require('../models/role.js');
-const Usuario = require('../models/usuario.js');
+//const {Categoria } = require('../models/index.js');
+//const Role = require('../models/role.js');
+//const { Usuario } = require('../models');
+//*Las lineas 2,3,4 se puden declarar de la siguinete manera ya que todas se declaran  en el archivo index.js. Se puede no escribir el archivo index.js en require, ya que lo  reconoe por defecto.
+const { Usuario, Categoria, Role, Producto } = require('../models');
 
 //* debemos exporta mongoose para poder utilizar un metod de monggose
 
@@ -25,14 +28,43 @@ const existeUsuaroPorId = async (id) => {
 	//y preguentamso que si existe  ese usuario en la DB.
 
 	if (!existeUsuario) {
-		//* Pregunamos: Si   el usuario no existe por ese  el id, se mandaria como respuesta un null , enviaremos un mensaje de error.
+		//* Preguntamos: Si   el usuario no existe por ese  el id, se mandaria como respuesta un null , enviaremos un mensaje de error.
 
 		throw new Error(`NO EXISTE EL USUARIO CON EL id: ${id}`); //* escribimos que a ocurrido un error.
 	}
 };
 
+//* Crearemos un funcion para  validad si existe la categoria por id
+
+const existeCategoriaPorId = async (id) => {
+	const existeCategoria = await Categoria.findById(id); //*Localizmos La categoria  por su id
+	//* preguentamso que si existe  ese categoria en la DB.
+
+	if (!existeCategoria) {
+		//* Preguntamos: Si   la Categoria no existe por ese  el id, se mandaria como respuesta un null , enviaremos un mensaje de error.
+
+		throw new Error(`NO EXISTE LA CATEGORIA  CON EL id: ${id}`); //* escribimos que a ocurrido un error.
+	}
+};
+
+//*Crearemos la funcion para ver si exite producot por id
+const existePorductoPorId = async (id) => {
+	const existeProducto = await Producto.findById(id); //*LocalizmosE el proucto por su id
+	//* preguentamso que si existe  ese roducto en la DB.
+
+	if (!existeProducto) {
+		//* Preguntamos: Si   El Producto no existe por ese  el id, se mandaria como respuesta un null , enviaremos un mensaje de error.
+
+		throw new Error(`NO EXISTe EL PRODUCTO CON EL id: ${id}`); //* escribimos que a ocurrido un error.
+	}
+};
+
+//*Fin de existeProducotPorId
+
 module.exports = {
 	esRolvalido,
 	emailExiste,
 	existeUsuaroPorId,
+	existeCategoriaPorId,
+	existePorductoPorId,
 };

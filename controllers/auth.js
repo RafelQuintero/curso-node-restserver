@@ -91,7 +91,7 @@ const googleSigIn = async (req, res = response) => {
 			token,
 		});
 	} catch (error) {
-		json.status(400).json({
+		res.status(400).json({
 			ok: false,
 			msg: 'El token no se pudo verificar',
 		});

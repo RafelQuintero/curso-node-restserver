@@ -9,6 +9,8 @@ const bcryptjs = require('bcryptjs'); //! requeimos en modulo para la encripatci
 const Usuario = require('../models/usuario.js');
 
 const usuariosGet = async (req = request, res = response) => {
+	//?video de la seccion 9  video 136
+
 	//? Desectruraremso la informacion que necesto, que viene del query
 	//! En la peticon "que viene con la url "y estas  solicitudes  llamadas query,  se piden; de la siguiente manera:
 	//todo:  comentemos las lines 15 hasta 21

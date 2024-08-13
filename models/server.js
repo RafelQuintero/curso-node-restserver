@@ -3,6 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 const { dbConnection } = require('../database/config');
+const { auth } = require('google-auth-library');
 
 class Server {
 	//creamos los  atributos direcatmente en la en el constructor, asi como los metodos
@@ -11,10 +12,21 @@ class Server {
 		this.app = express();
 
 		this.port = process.env.PORT;
-		this.routesPatch = '/api/usuarios'; //?Para que sepa cualquier otro  que estas son las rutas que utiliza un usuario
-		this.authPath = '/api/auth'; //? Esta sera la ruta para la autenticacion del usuario
+		//this.routesPatch = '/api/usuarios'; //?Para que sepa //cualquier otro  que estas son las rutas que utiliza un //usuario
+		//this.authPath = '/api/auth'; //? Esta sera la ruta para la //autenticacion del usuario
+		//
+		//this.categoriaPath ="/api/categorias"//?Esta sera la ruta //de categorias
 
-		//*Hacemos la conexion con la base de datos justo cunado hagamos la lla maada
+		//*Para optimizar las lineas 13, 14 15 y 17 crearemos referencia a una variable del tipo objeto, para obtener las rutas anteriores
+		this.paths = {
+			auth: '/api/auth',
+			buscar: '/api/buscar', //TODO: Ahora la definimos masa abajo en la ruta
+			categorias: '/api/categorias',
+			productos: '/api/productos',
+			usuarios: '/api/usuarios',
+		};
+
+		//*Hacemos la conexion con la base de datos justo cunado hagamos la llamaada
 
 		this.conectarDB();
 
@@ -51,9 +63,19 @@ class Server {
 	//todo: Donde las respuesta es  es del tipo json la cual esta conformada por por objetos
 
 	routes() {
-		this.app.use(this.authPath, require('../routes/auth')); //* Se creo la ruta para la autenticacion
+		this.app.use(this.paths.auth, require('../routes/auth')); //* Se creo la ruta para la autenticacion
+		//* Se crea la ruata para buscar : categoria , productos, ususrio,etc.
+		this.app.use(this.paths.buscar, require('../routes/buscar'));
 
-		this.app.use(this.routesPatch, require('../routes/usuarios'));
+		//* Aqui definimos la nueva ruta de categorias
+
+		this.app.use(this.paths.categorias, require('../routes/categorias'));
+
+		this.app.use(this.paths.productos, require('../routes/productos'));
+
+		this.app.use(this.paths.usuarios, require('../routes/usuarios'));
+
+		//******* */
 	}
 
 	//todo: Creaermos el metodo para que este escuhando o esperendo en el purto especificado ,
@@ -67,3 +89,4 @@ class Server {
 }
 
 module.exports = Server;
+//Necesotare 5 servicos res para solicitar estos servicios.
