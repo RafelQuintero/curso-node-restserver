@@ -5,6 +5,9 @@ const cors = require('cors');
 const { dbConnection } = require('../database/config');
 const { auth } = require('google-auth-library');
 
+//TODO: Utilizamos el requerimiento de abajo para poder cargar los archivos
+const fileUpload = require('express-fileupload');
+
 class Server {
 	//creamos los  atributos direcatmente en la en el constructor, asi como los metodos
 
@@ -24,6 +27,9 @@ class Server {
 			categorias: '/api/categorias',
 			productos: '/api/productos',
 			usuarios: '/api/usuarios',
+			//? Crearemos un nuevo paths (ruta)para manejar el url cargar el archivo
+
+			uploads: '/api/uploads',
 		};
 
 		//*Hacemos la conexion con la base de datos justo cunado hagamos la llamaada
@@ -47,6 +53,7 @@ class Server {
 	//todo: Definimos el metodo para los middelwares
 
 	middelwares() {
+		//todo. tdo la que esta escrito aqui son middelware
 		//! Creano los middlware
 		//? usemos cors para interactuar con la web usando   middleware
 		this.app.use(cors());
@@ -57,6 +64,15 @@ class Server {
 		//?Estamos usando un middelware  para que se use la carpeta  public como primera opción.
 
 		this.app.use(express.static('public'));
+
+		//? el el midelware para manipular el: fileupload - Cargar Archivos
+		this.app.use(
+			fileUpload({
+				useTempFiles: true,
+				tempFileDir: '/tmp/',
+				createParentPath: true, // Esta comando  es  que si no tengo una carpeta ella me la crea para guardar los archios de un tipo que quiero
+			}),
+		);
 	}
 
 	//todo: definamos las rutas por medio de un metodo que haremos llamado routes
@@ -74,6 +90,8 @@ class Server {
 		this.app.use(this.paths.productos, require('../routes/productos'));
 
 		this.app.use(this.paths.usuarios, require('../routes/usuarios'));
+
+		this.app.use(this.paths.uploads, require('../routes/uploads'));
 
 		//******* */
 	}

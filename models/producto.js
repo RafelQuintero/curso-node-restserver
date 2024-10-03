@@ -36,6 +36,11 @@ const ProductoSchema = new Schema({
 		type: String,
 	},
 	disponible: { type: Boolean },
+	//TODO: Como no existe una propiedad para grabarle una imagen a un producto, lo crearemos, la cual lla llamremos "img".
+
+	img: {
+		type: String,
+	},
 });
 
 ///******/

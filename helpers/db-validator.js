@@ -45,6 +45,7 @@ const existeCategoriaPorId = async (id) => {
 
 		throw new Error(`NO EXISTE LA CATEGORIA  CON EL id: ${id}`); //* escribimos que a ocurrido un error.
 	}
+	return true;
 };
 
 //*Crearemos la funcion para ver si exite producot por id
@@ -57,9 +58,26 @@ const existePorductoPorId = async (id) => {
 
 		throw new Error(`NO EXISTe EL PRODUCTO CON EL id: ${id}`); //* escribimos que a ocurrido un error.
 	}
+	return true;
 };
 
 //*Fin de existeProducotPorId
+
+//!todo:! Aqui crearemos la funcion de coleccionesPermitida() para comprobar que la coleccion que se mando esta dentro de las permitidas.
+
+const coleccionesPermitidas = (coleccion = '', colecciones = []) => {
+	//todo:  aqui verificamos que la coleccion exista y que sest permitida
+	const coleccionIncluida = colecciones.includes(coleccion);
+	if (!coleccionIncluida) {
+		throw new Error(
+			`La coleccion ${coleccion} no es permitida, ${colecciones}`,
+		);
+	}
+	return true;
+};
+
+//todo:Fin de coleccionesPermitidas
+//TODO: No hicmos la funcion que  valide el id es del usuario.
 
 module.exports = {
 	esRolvalido,
@@ -67,4 +85,5 @@ module.exports = {
 	existeUsuaroPorId,
 	existeCategoriaPorId,
 	existePorductoPorId,
+	coleccionesPermitidas,
 };
