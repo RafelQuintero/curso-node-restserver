@@ -40,7 +40,10 @@ const validarJWT = async (req = request, res = response, next) => {
 			});
 		}
 
-		//*Ähora lo guardamos en  la req creando la porpiedad req.usuarrio =usuario
+		//*Ähora lo guardamos la información del usuariio autenicado en el objeto 
+		// req(la pticion HTTP). Esto significa que cualier otro funcion o middleware que se
+		// depues tendrá acceso a la informacion de usirio auteticado sin necesidad d
+		//hacer otro consulta a la base de datos. Utilizzando req.usuarrio =usuario..
 		req.usuario = usuario;
 
 		next(); //
